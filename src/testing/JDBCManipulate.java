@@ -38,7 +38,7 @@ public class JDBCManipulate {
                 switch (choice) {
                     case 1: getInfo(stmt);
                         break;
-                    case 2: addEntry();
+                    case 2: addEntry(stmt);
                         System.out.println("Data added.\n");
                         break;
                     case 3: deleteEntry();
@@ -77,7 +77,7 @@ public class JDBCManipulate {
     }//end main
 
     static void printChoices() {
-        System.out.println("Press 1 to see database data.\n" +
+        System.out.println("Press 1 to see database information.\n" +
                 "Press 2 to add an entry.\n" +
                 "Press 3 to delete an entry.\n" +
                 "Press 4 to exit.");
@@ -120,8 +120,21 @@ public class JDBCManipulate {
         System.out.println("\n\n");
     }
 
-    static void addEntry() {
-        System.out.println("Add");
+    static void addEntry(Statement sqlStatement) {
+        String name, GPA, major, grad;
+        name = "dude";
+        GPA = "2.3";
+        major = "physics";
+        grad = "2000";
+        String sqlQuery = "INSERT INTO student (name, GPA, major, grad)\n" +
+                "VALUES ('" + name + "', '" + GPA + "', '" + major + "', '" + grad + "' );";
+        System.out.println(sqlQuery);
+        try {
+            sqlStatement.executeUpdate(sqlQuery);
+        } catch (SQLException se) {
+            System.out.println(grad);
+            se.printStackTrace();
+        }
     }
 
     static void deleteEntry() {
