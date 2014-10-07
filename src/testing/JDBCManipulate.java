@@ -33,12 +33,12 @@ public class JDBCManipulate {
             while (choice != 4) {
                 printChoices();
                 System.out.println("What would you like to do? ");
-                choice = getInput();
+                choice = getChoice();
                 System.out.println("\n");
                 switch (choice) {
                     case 1: getInfo(stmt);
                         break;
-                    case 2: addEntry();
+                    case 2: addEntry(stmt);
                         System.out.println("Data added.\n");
                         break;
                     case 3: deleteEntry();
@@ -77,13 +77,13 @@ public class JDBCManipulate {
     }//end main
 
     static void printChoices() {
-        System.out.println("Press 1 to see database data.\n" +
+        System.out.println("Press 1 to see database information.\n" +
                 "Press 2 to add an entry.\n" +
                 "Press 3 to delete an entry.\n" +
                 "Press 4 to exit.");
     }
 
-    static int getInput() {
+    static int getChoice() {
         int choice;
         int loops = 0;
         do {
@@ -120,8 +120,64 @@ public class JDBCManipulate {
         System.out.println("\n\n");
     }
 
-    static void addEntry() {
-        System.out.println("Add");
+    static void addEntry(Statement sqlStatement) {
+        String name, GPA, major, grad;
+        Scanner in = new Scanner(System.in);
+        int loops = 0;
+
+        //Get name
+        System.out.println("Enter your first name: ");
+        do {
+            if (loops > 1) {
+                System.out.println("Please enter between 1 and 30 characters: ");
+            }
+            name = in.next();
+            loops++;
+        } while (name.length() > 30 || name.length() < 1);
+        loops = 0;
+
+        //Get GPA
+        System.out.println("Enter your GPA: ");
+        do {
+            if (loops > 1) {
+                System.out.println("Please enter a number between 0.0 and 4.0 characters: ");
+            }
+            GPA = in.next();
+            loops++;
+        } while (Float.parseFloat(GPA) > 4.0 || Float.parseFloat(GPA) < 0.0);
+        loops = 0;
+
+        //Get major
+        System.out.println("Enter your major: ");
+        do {
+            if (loops > 1) {
+                System.out.println("Please enter between 1 and 30 characters: ");
+            }
+            major = in.next();
+            loops++;
+        } while (major.length() > 30 || major.length() < 1);
+        loops = 0;
+
+        //Get year of graduation
+        System.out.println("Enter your year of graduation: ");
+        do {
+            if (loops > 1) {
+                System.out.println("Please enter a number between 1912 and 2018 characters: ");
+            }
+            grad = in.next();
+            loops++;
+        } while (Integer.parseInt(grad) > 2018 || Integer.parseInt(grad) < 1900);
+
+        //Construct the sqlQuery and execute it
+        String sqlQuery = "INSERT INTO student (name, GPA, major, grad)\n" +
+                "VALUES ('" + name + "', '" + GPA + "', '" + major + "', '" + grad + "' );";
+        System.out.println(sqlQuery);
+        try {
+            sqlStatement.executeUpdate(sqlQuery);
+        } catch (SQLException se) {
+            System.out.println(grad);
+            se.printStackTrace();
+        }
     }
 
     static void deleteEntry() {
