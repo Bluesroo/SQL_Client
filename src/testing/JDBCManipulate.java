@@ -2,8 +2,9 @@ package testing;
 import java.sql.*;
 import java.util.Scanner;
 
-/*
-    Author: Bluesroo
+/**
+ * Author: Joseph Pariseau
+ * This is a simple SQL server written in Java.
  */
 
 public class JDBCManipulate {
@@ -36,12 +37,15 @@ public class JDBCManipulate {
                 choice = getChoice();
                 System.out.println("\n");
                 switch (choice) {
-                    case 1: getInfo(stmt);
+                    case 1:
+                        getInfo(stmt);
                         break;
-                    case 2: addEntry(stmt);
+                    case 2:
+                        addEntry(stmt);
                         System.out.println("Data added.\n");
                         break;
-                    case 3: deleteEntry();
+                    case 3:
+                        deleteEntry();
                         System.out.println("Data deleted.\n");
                         break;
                     case 4:
@@ -49,6 +53,7 @@ public class JDBCManipulate {
                         break;
                     default:
                         System.out.println("Invalid input.");
+                        break;
                 }
             }
         } catch (SQLException se) {
@@ -126,7 +131,7 @@ public class JDBCManipulate {
         int loops = 0;
 
         //Get name
-        System.out.println("Enter your first name: ");
+        System.out.println("Enter a first name: ");
         do {
             if (loops > 1) {
                 System.out.println("Please enter between 1 and 30 characters: ");
@@ -137,7 +142,7 @@ public class JDBCManipulate {
         loops = 0;
 
         //Get GPA
-        System.out.println("Enter your GPA: ");
+        System.out.println("Enter a GPA: ");
         do {
             if (loops > 1) {
                 System.out.println("Please enter a number between 0.0 and 4.0 characters: ");
@@ -148,7 +153,7 @@ public class JDBCManipulate {
         loops = 0;
 
         //Get major
-        System.out.println("Enter your major: ");
+        System.out.println("Enter a major: ");
         do {
             if (loops > 1) {
                 System.out.println("Please enter between 1 and 30 characters: ");
@@ -159,10 +164,10 @@ public class JDBCManipulate {
         loops = 0;
 
         //Get year of graduation
-        System.out.println("Enter your year of graduation: ");
+        System.out.println("Enter a year of graduation: ");
         do {
             if (loops > 1) {
-                System.out.println("Please enter a number between 1912 and 2018 characters: ");
+                System.out.println("Please enter a number between 1912 and 2020 characters: ");
             }
             grad = in.next();
             loops++;
