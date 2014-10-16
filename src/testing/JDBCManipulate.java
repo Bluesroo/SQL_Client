@@ -83,6 +83,7 @@ public class JDBCManipulate {
     }//End main
 
     static void printChoices(String caller) {
+        System.out.println("\n");
         switch (caller) {
             case "main":
                 System.out.println("Press 1 to see database information.\n" +
@@ -164,19 +165,15 @@ public class JDBCManipulate {
 
     static void getInfo(Statement sqlStatement) {
         try {
-            String sqlQuery = "SHOW COLUMNS FROM student;";
-            sqlStatement.executeQuery(sqlQuery);
+            String sqlQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'student';";
             ResultSet results = sqlStatement.executeQuery(sqlQuery);
             ResultSetMetaData resultsMetaData = results.getMetaData();
 
             int columnsNumber = resultsMetaData.getColumnCount();
             while (results.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
-                    if (i > 1) {
-                        System.out.print("\t");
-                    }
                     String columnValue = results.getString(i);
-                    System.out.print(columnValue + " " + resultsMetaData.getColumnName(i) + "\n");
+                    System.out.println(columnValue);
                 }//End for
             }//End while
         } catch (SQLException se) {
@@ -218,16 +215,19 @@ public class JDBCManipulate {
         System.out.println("\n");
         switch (choice) {
             case 1:
+                System.out.println("Enter a first name: ");
                 String name = getString("Please enter between 1 and 30 characters: ", 1, 30);
                 sqlQuery = "DELETE FROM student WHERE name = '" + name + "'\n" +
                         "ORDER BY added LIMIT 1;";
                 break;
             case 2:
+                System.out.println("Enter an id: ");
                 String id = getIntStr("Please enter a valid id: ", 1, 100);
                 sqlQuery = "DELETE FROM student WHERE id = '" + id + "'\n" +
                         "ORDER BY added LIMIT 1;";
                 break;
             case 3:
+                System.out.println("Enter a year of graduation: ");
                 String grad = getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
                 sqlQuery = "DELETE FROM student WHERE grad = '" + grad + "'\n" +
                         "ORDER BY added LIMIT 1;";
