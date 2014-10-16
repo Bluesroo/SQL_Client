@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 
 public class JDBCManipulate {
+
     //Database connection variables
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";
@@ -88,6 +89,12 @@ public class JDBCManipulate {
                         "Press 2 to add an entry.\n" +
                         "Press 3 to delete an entry.\n" +
                         "Press 4 to exit.");
+                break;
+            case "delete":
+                System.out.println("Press 1 to delete by name.\n" +
+                        "Press 2 to delete by id.\n" +
+                        "Press 3 to delete by graduation year.\n" +
+                        "Press 4 to cancel.");
                 break;
             default:
                 System.out.println("Invalid caller.");
@@ -175,7 +182,6 @@ public class JDBCManipulate {
         } catch (SQLException se) {
             se.printStackTrace();
         }//End try
-        System.out.println("\n\n");
     }//End getInfo
 
     static void addEntry(Statement sqlStatement) {
@@ -202,14 +208,42 @@ public class JDBCManipulate {
     }//End addEntry
 
     static void deleteEntry(Statement sqlStatement) {
-        System.out.println("Please enter the name of the entry you'd like to delete: ");
-        String name = getString("Please enter between 1 and 30 characters: ", 1, 30);
+        String caller = "delete";
+        String sqlQuery = null;
+        int choice;
 
-        //Construct the sqlQuest and execute it
-        String sqlQuery = "DELETE FROM student WHERE name = '" + name + "'\n" +
-                "ORDER BY added LIMIT 1;";
+        //Constructs sqlQuery
+        printChoices(caller);
+        choice = getChoice();
+        System.out.println("\n");
+        switch (choice) {
+            case 1:
+                String name = getString("Please enter between 1 and 30 characters: ", 1, 30);
+                sqlQuery = "DELETE FROM student WHERE name = '" + name + "'\n" +
+                        "ORDER BY added LIMIT 1;";
+                break;
+            case 2:
+                String id = getIntStr("Please enter a valid id: ", 1, 100);
+                sqlQuery = "DELETE FROM student WHERE id = '" + id + "'\n" +
+                        "ORDER BY added LIMIT 1;";
+                break;
+            case 3:
+                String grad = getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
+                sqlQuery = "DELETE FROM student WHERE grad = '" + grad + "'\n" +
+                        "ORDER BY added LIMIT 1;";
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Invalid input.");
+                break;
+        }
+
+        //Execute the sqlQuery
         try {
-            sqlStatement.executeUpdate(sqlQuery);
+            if (sqlQuery != null) {
+                sqlStatement.executeUpdate(sqlQuery);
+            }
         } catch (SQLException se) {
             se.printStackTrace();
         }
