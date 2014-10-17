@@ -93,44 +93,11 @@ public class JDBCManipulate {
      * Edits an entry to the table.
      */
     static void editEntry(Statement sqlStatement) {
-        String caller = "edit";
-        String sqlQuery = null;
-        int choice;
-
-        JDBCHelper.printChoices(caller);
-        choice = JDBCHelper.getChoice(4);
-        System.out.println("\n");
-        switch (choice) {
-            case 1:
-                System.out.println("Enter a first name: ");
-                String name = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
-                sqlQuery = "DELETE FROM student WHERE name = '" + name + "'\n" +
-                        "ORDER BY added LIMIT 1;";
-                break;
-            case 2:
-                System.out.println("Enter an id: ");
-                String id = JDBCHelper.getIntStr("Please enter a valid id: ", 1, 100);
-                sqlQuery = "DELETE FROM student WHERE id = '" + id + "'\n" +
-                        "ORDER BY added LIMIT 1;";
-                break;
-            case 3:
-                System.out.println("Enter a year of graduation: ");
-                String grad = JDBCHelper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
-                sqlQuery = "DELETE FROM student WHERE grad = '" + grad + "'\n" +
-                        "ORDER BY added LIMIT 1;";
-                break;
-            case 4:
-                return;
-            default:
-                System.out.println("Invalid input.");
-                break;
-        }
+        String sqlQuery = "UPDATE student SET name = 'bob' WHERE id = '6';";
 
         //Execute the sqlQuery
         try {
-            if (sqlQuery != null) {
-                sqlStatement.executeUpdate(sqlQuery);
-            }
+            sqlStatement.executeUpdate(sqlQuery);
         } catch (SQLException se) {
             se.printStackTrace();
         }

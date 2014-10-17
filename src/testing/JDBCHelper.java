@@ -117,4 +117,43 @@ public class JDBCHelper {
         } while (Float.parseFloat(input) < min || Float.parseFloat(input) > max);
         return input;
     }//End getFloatStr
+
+    static String queryBuilder(String caller,
+                               String whereCondition, String whereArgument,
+                               String setCondition, String setArgument) {
+        String query;
+        String operation;
+        switch (caller) {
+            case "insert":
+                operation = "INSERT INTO student (name, GPA, major, grad)";
+                break;
+            case "delete":
+                operation = "DELETE FROM student";
+                break;
+            case "edit":
+                operation = "UPDATE student";
+                break;
+            default:
+                return "";
+        }
+        query = operation;
+
+        String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
+        query = query.concat(" " + where);
+
+        if (caller.equals("edit")) {
+            String set = "SET " + setCondition + " = '" + setArgument + "'";
+            query = query.concat(" " + set);
+        }
+
+        String orderCondition;
+        if (caller.equals("insert")) {
+            orderCondition = ";";
+        }
+        else {
+            orderCondition = "ORDER BY added LIMIT 1;";
+        }
+        query = query.concat(" " + orderCondition);
+        return query;
+    }//End queryBuilder
 }//End JDBCHelper
