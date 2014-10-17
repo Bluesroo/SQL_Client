@@ -37,10 +37,10 @@ public class server {
             Class.forName(JDBC_DRIVER);
 
             //Gets the user's choice and directs them to the proper function
-            while (choice != 4) {
+            while (choice != 5) {
                 JDBCHelper.printChoices(caller);
                 System.out.println("What would you like to do? ");
-                choice = JDBCHelper.getChoice();
+                choice = JDBCHelper.getChoice(5);
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
@@ -55,6 +55,10 @@ public class server {
                         System.out.println("Data deleted.\n");
                         break;
                     case 4:
+                        JDBCManipulate.editEntry(sqlStatment);
+                        System.out.println("Data edited.\n");
+                        break;
+                    case 5:
                         System.out.println("Goodbye!");
                         break;
                     default:

@@ -22,7 +22,8 @@ public class JDBCHelper {
                 System.out.println("Press 1 to see database information.\n" +
                         "Press 2 to add an entry.\n" +
                         "Press 3 to delete an entry.\n" +
-                        "Press 4 to exit.");
+                        "Press 4 to edit an entry.\n" +
+                        "Press 5 to exit.");
                 break;
             case "delete":
                 System.out.println("Press 1 to delete by name.\n" +
@@ -30,6 +31,11 @@ public class JDBCHelper {
                         "Press 3 to delete by graduation year.\n" +
                         "Press 4 to cancel.");
                 break;
+            case "edit":
+                System.out.println("Press 1 to edit by name.\n" +
+                        "Press 2 to edit by id.\n" +
+                        "Press 3 to edit by graduation year.\n" +
+                        "Press 4 to cancel.");
             default:
                 System.out.println("Invalid caller.");
                 break;
@@ -40,18 +46,18 @@ public class JDBCHelper {
      * Gets user input between 1 and 4.
      * Used in conjunction with printChoices.
      */
-    static int getChoice() {
+    static int getChoice(int max) {
         int choice;
         int loops = 0;
 
         do {
             if (loops > 0) {
-                System.out.println("Please enter a valid value: ");
+                System.out.println("Please enter a value between 1 and " + max +": ");
             }
             Scanner in = new Scanner(System.in);
             choice = in.nextInt();
             loops++;
-        } while (choice < 1 || choice > 4);
+        } while (choice < 1 || choice > max);
         return choice;
     }//End getChoice
 
