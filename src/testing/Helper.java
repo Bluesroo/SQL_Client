@@ -10,7 +10,7 @@ import java.util.Scanner;
  * By the end it will handle user input and SQL injection protection.
  */
 
-public class JDBCHelper {
+public class Helper {
 
     /**
      * Prints out the user's choices depending on the view that they are looking at.
@@ -186,4 +186,4 @@ public class JDBCHelper {
 
         return query;
     }//End manipulateQueryBuilder
-}//End JDBCHelper
+}//End Helper

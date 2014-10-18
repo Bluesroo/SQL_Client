@@ -18,8 +18,8 @@ public class server {
     //Database connection variables
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";
-    static final String USER = "USER";
-    static final String PASS = "PASS";
+    static final String USER = User.USER;
+    static final String PASS = User.PASS;
 
     /**
      * Main entry point for the server.
@@ -38,24 +38,24 @@ public class server {
 
             //Gets the user's choice and directs them to the proper function
             while (choice != 5) {
-                JDBCHelper.printChoices(caller);
+                Helper.printChoices(caller);
                 System.out.println("What would you like to do? ");
-                choice = JDBCHelper.getChoice(5);
+                choice = Helper.getChoice(5);
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
-                        JDBCInfo.printColumns(sqlStatment);
+                        Info.printColumns(sqlStatment);
                         break;
                     case 2:
-                        JDBCManipulate.addEntry(sqlStatment);
+                        Manipulate.addEntry(sqlStatment);
                         System.out.println("Data added.\n");
                         break;
                     case 3:
-                        JDBCManipulate.deleteEntry(sqlStatment);
+                        Manipulate.deleteEntry(sqlStatment);
                         System.out.println("Data deleted.\n");
                         break;
                     case 4:
-                        JDBCManipulate.editEntry(sqlStatment);
+                        Manipulate.editEntry(sqlStatment);
                         System.out.println("Data edited.\n");
                         break;
                     case 5:

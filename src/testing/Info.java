@@ -14,7 +14,7 @@ import java.sql.Statement;
  * By the end it will be able to handle complex SELECT requests.
  */
 
-public class JDBCInfo {
+public class Info {
 
     /**
      * Prints the columns at the table has.
@@ -36,4 +36,4 @@ public class JDBCInfo {
             se.printStackTrace();
         }//End try
     }//End printColumns
-}//End JDBCInfo
+}//End Info
