@@ -31,11 +31,17 @@ public class JDBCHelper {
                         "Press 3 to delete by graduation year.\n" +
                         "Press 4 to cancel.");
                 break;
-            case "edit":
+            case "edit1":
                 System.out.println("Press 1 to edit by name.\n" +
                         "Press 2 to edit by id.\n" +
                         "Press 3 to edit by graduation year.\n" +
                         "Press 4 to cancel.");
+                break;
+            case "edit2":
+                System.out.println("Press 1 to edit a name.\n" +
+                        "Press 2 to edit a graduation year.\n" +
+                        "Press 3 to cancel.");
+                break;
             default:
                 System.out.println("Invalid caller.");
                 break;
@@ -118,9 +124,10 @@ public class JDBCHelper {
         return input;
     }//End getFloatStr
 
-    static String queryBuilder(String caller,
+    static String manipulateQueryBuilder(String caller,
                                String whereCondition, String whereArgument,
-                               String setCondition, String setArgument) {
+                               String[] valueArguments, String setCondition,
+                               String setArgument) {
         String query;
         String operation;
         switch (caller) {
@@ -138,8 +145,16 @@ public class JDBCHelper {
         }
         query = operation;
 
-        String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
-        query = query.concat(" " + where);
+        if (caller.equals("insert")) {
+            String values = "VALUES ('" + valueArguments[0] + "', '" + valueArguments[1] + "'," +
+                    " '" + valueArguments[2] + "', '" + valueArguments[3] + "')";
+            query = query.concat(" " + values);
+        }
+
+        if (!caller.equals("insert")) {
+            String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
+            query = query.concat(" " + where);
+        }
 
         if (caller.equals("edit")) {
             String set = "SET " + setCondition + " = '" + setArgument + "'";
@@ -151,9 +166,9 @@ public class JDBCHelper {
             orderCondition = ";";
         }
         else {
-            orderCondition = "ORDER BY added LIMIT 1;";
+            orderCondition = " ORDER BY added LIMIT 1;";
         }
-        query = query.concat(" " + orderCondition);
+        query = query.concat(orderCondition);
         return query;
-    }//End queryBuilder
+    }//End manipulateQueryBuilder
 }//End JDBCHelper
