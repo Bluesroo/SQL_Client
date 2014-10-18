@@ -7,9 +7,6 @@ import java.sql.*;
  * This class is responsible for manipulating the db based on user input.
  *
  * By the end it will be able to add, delete, and edit entries.
- *
- * (It might also be able to edit the table itself, but that's to be decided
- * later).
  */
 
 public class Manipulate {
