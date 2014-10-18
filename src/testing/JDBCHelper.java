@@ -22,13 +22,27 @@ public class JDBCHelper {
                 System.out.println("Press 1 to see database information.\n" +
                         "Press 2 to add an entry.\n" +
                         "Press 3 to delete an entry.\n" +
-                        "Press 4 to exit.");
+                        "Press 4 to edit an entry.\n" +
+                        "Press 5 to exit.");
                 break;
             case "delete":
                 System.out.println("Press 1 to delete by name.\n" +
                         "Press 2 to delete by id.\n" +
                         "Press 3 to delete by graduation year.\n" +
                         "Press 4 to cancel.");
+                break;
+            case "edit1":
+                System.out.println("Press 1 to edit by name.\n" +
+                        "Press 2 to edit by graduation year.\n" +
+                        "Press 3 to edit by id.\n" +
+                        "Press 4 to cancel.");
+                break;
+            case "edit2":
+                System.out.println("Press 1 to edit the name.\n" +
+                        "Press 2 to edit the GPA.\n" +
+                        "Press 3 to edit the major.\n" +
+                        "Press 4 to edit the graduation year.\n" +
+                        "Press 5 to cancel.");
                 break;
             default:
                 System.out.println("Invalid caller.");
@@ -40,18 +54,18 @@ public class JDBCHelper {
      * Gets user input between 1 and 4.
      * Used in conjunction with printChoices.
      */
-    static int getChoice() {
+    static int getChoice(int max) {
         int choice;
         int loops = 0;
 
         do {
             if (loops > 0) {
-                System.out.println("Please enter a valid value: ");
+                System.out.println("Please enter a value between 1 and " + max +": ");
             }
             Scanner in = new Scanner(System.in);
             choice = in.nextInt();
             loops++;
-        } while (choice < 1 || choice > 4);
+        } while (choice < 1 || choice > max);
         return choice;
     }//End getChoice
 
@@ -111,4 +125,65 @@ public class JDBCHelper {
         } while (Float.parseFloat(input) < min || Float.parseFloat(input) > max);
         return input;
     }//End getFloatStr
+
+
+    /**
+     * Constructs a manipulative SQL query (INSERT, UPDATE, DELETE).
+     * Returns the query as a String.
+     */
+    static String manipulateQueryBuilder(String caller,
+                               String whereCondition, String whereArgument,
+                               String[] valueArguments, String setCondition,
+                               String setArgument) {
+        String query;
+
+        //Sets the statement of the query
+        String statement;
+        switch (caller) {
+            case "insert":
+                statement = "INSERT INTO student (name, GPA, major, grad)";
+                break;
+            case "delete":
+                statement = "DELETE FROM student";
+                break;
+            case "edit":
+                statement = "UPDATE student";
+                break;
+            default:
+                return "";
+        }
+        query = statement;
+
+        //If insert called this function, set the VALUES for INSERT INTO
+        if (caller.equals("insert")) {
+            String values = "VALUES ('" + valueArguments[0] + "', '" + valueArguments[1] + "'," +
+                    " '" + valueArguments[2] + "', '" + valueArguments[3] + "')";
+            query = query.concat("\n" + values);
+        }
+
+        //If edit called this function, set the SET for UPDATE
+        if (caller.equals("edit")) {
+            String set = "SET " + setCondition + " = '" + setArgument + "'";
+            query = query.concat("\n" + set);
+        }
+
+        //If insert was not the caller, set the WHERE value
+        if (!caller.equals("insert")) {
+            String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
+            query = query.concat("\n" + where);
+        }
+
+        //If insert was not the caller, set the ODER BY
+        String orderCondition;
+        if (!caller.equals("insert")) {
+            orderCondition = "\nORDER BY added LIMIT 1;";
+        }
+        else {
+            orderCondition = ";";
+
+        }
+        query = query.concat(orderCondition);
+
+        return query;
+    }//End manipulateQueryBuilder
 }//End JDBCHelper
