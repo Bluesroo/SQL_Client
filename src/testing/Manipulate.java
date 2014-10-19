@@ -34,7 +34,7 @@ public class Manipulate {
             System.out.println(grad);
             se.printStackTrace();
         }
-    }//End addEntry
+    } //End addEntry
 
     /**
      * Simply deletes an entry from the db
@@ -79,7 +79,7 @@ public class Manipulate {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-    }//End deleteEntry
+    } //End deleteEntry
 
     /**
      * Edits a database entry
@@ -116,7 +116,7 @@ public class Manipulate {
             default:
                 System.out.println("Invalid input.");
                 return;
-        }//End switch
+        } //End switch
         Helper.printChoices(caller2);
         choice = Helper.getChoice(5);
         System.out.println("\n");
@@ -146,7 +146,7 @@ public class Manipulate {
             default:
                 System.out.println("Invalid input.");
                 return;
-        }//End switch
+        } //End switch
         sqlQuery = Helper.manipulateQueryBuilder("edit", whereCondition, whereArgument, null, setCondition, setArgument);
 
         //Execute the sqlQuery
@@ -157,5 +157,5 @@ public class Manipulate {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-    }//End editEntry
-}//End Manipulate
+    } //End editEntry
+} //End Manipulate

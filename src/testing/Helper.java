@@ -19,11 +19,14 @@ public class Helper {
         System.out.println("\n");
         switch (caller) {
             case "main":
-                System.out.println("Press 1 to see database information.\n" +
-                        "Press 2 to add an entry.\n" +
-                        "Press 3 to delete an entry.\n" +
-                        "Press 4 to edit an entry.\n" +
-                        "Press 5 to exit.");
+                System.out.println("Press 1 to see a row.\n" +
+                        "Press 2 to see a column.\n" +
+                        "Press 3 to see the whole table.\n" +
+                        "Press 4 to see the column names.\n" +
+                        "Press 5 to add an entry.\n" +
+                        "Press 6 to delete an entry.\n" +
+                        "Press 7 to edit an entry.\n" +
+                        "Press 8 to exit.");
                 break;
             case "delete":
                 System.out.println("Press 1 to delete by name.\n" +
@@ -47,8 +50,8 @@ public class Helper {
             default:
                 System.out.println("Invalid caller.");
                 break;
-        }//End switch
-    }//End printChoices
+        } //End switch
+    } //End printChoices
 
     /**
      * Gets user input between 1 and 4.
@@ -67,7 +70,7 @@ public class Helper {
             loops++;
         } while (choice < 1 || choice > max);
         return choice;
-    }//End getChoice
+    } //End getChoice
 
     /**
      * Gets a string from System.in.
@@ -86,7 +89,7 @@ public class Helper {
             loops++;
         } while (input.length() > maxLength || input.length() < minLength);
         return input;
-    }//End getString
+    } //End getString
 
     /**
      * Similar to getString, but gets an int formatted as a String.
@@ -105,7 +108,7 @@ public class Helper {
             loops++;
         } while (Integer.parseInt(input) < min || Integer.parseInt(input) > max);
         return input;
-    }//End getIntStr
+    } //End getIntStr
 
     /**
      * Similar to getIntStr, but gets a float formatted as a String.
@@ -124,17 +127,31 @@ public class Helper {
             loops++;
         } while (Float.parseFloat(input) < min || Float.parseFloat(input) > max);
         return input;
-    }//End getFloatStr
+    } //End getFloatStr
 
+    /**
+     * Construct an informative SQL query (SELECT).
+     * Returns the query as a String.
+     */
+    static String infoQueryBuilder(String caller, String selectArg,
+                                   String fromArg, String whereCondition,
+                                   String whereArg) {
+        String query = "SELECT " + selectArg + "\nFROM " + fromArg;
+
+        if (caller.equals("row") || caller.equals("columnName")) {
+            query = query.concat("\nWHERE " + whereCondition + " = " + whereArg);
+        }
+
+        return query;
+    }
 
     /**
      * Constructs a manipulative SQL query (INSERT, UPDATE, DELETE).
      * Returns the query as a String.
      */
-    static String manipulateQueryBuilder(String caller,
-                               String whereCondition, String whereArgument,
-                               String[] valueArguments, String setCondition,
-                               String setArgument) {
+    static String manipulateQueryBuilder(String caller, String whereCondition,
+                                         String whereArgument, String[] valueArguments,
+                                         String setCondition, String setArgument) {
         String query;
 
         //Sets the statement of the query
@@ -167,23 +184,17 @@ public class Helper {
             query = query.concat("\n" + set);
         }
 
-        //If insert was not the caller, set the WHERE value
-        if (!caller.equals("insert")) {
-            String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
-            query = query.concat("\n" + where);
-        }
-
-        //If insert was not the caller, set the ODER BY
+        //If insert was not the caller, set the WHERE value and ORDER BY limit
         String orderCondition;
         if (!caller.equals("insert")) {
+            String where = "WHERE " + whereCondition + " = '" + whereArgument + "'";
             orderCondition = "\nORDER BY added LIMIT 1;";
-        }
-        else {
+            query = query.concat("\n" + where);
+        } else {
             orderCondition = ";";
-
         }
         query = query.concat(orderCondition);
 
         return query;
-    }//End manipulateQueryBuilder
-}//End Helper
+    } //End manipulateQueryBuilder
+} //End Helper

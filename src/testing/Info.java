@@ -15,14 +15,8 @@ import java.sql.Statement;
  */
 
 public class Info {
-
-    /**
-     * Prints the columns at the table has.
-     */
-    static void printColumns(Statement sqlStatement) {
+    static void printResults(ResultSet results) {
         try {
-            String sqlQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'student';";
-            ResultSet results = sqlStatement.executeQuery(sqlQuery);
             ResultSetMetaData resultsMetaData = results.getMetaData();
 
             int columnsNumber = resultsMetaData.getColumnCount();
@@ -34,6 +28,46 @@ public class Info {
             }
         } catch (SQLException se) {
             se.printStackTrace();
-        }//End try
-    }//End printColumns
-}//End Info
+        }
+    }
+
+    static void printRow(Statement sqlStatement) {
+        String sqlQuery, fromArg, whereCondition, whereArg;
+        String caller = "row";
+        String selectArg = "*";
+        fromArg = "student";
+
+        System.out.println("Please enter a row name: ");
+        whereCondition = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        System.out.println("Please enter a value from the row: ");
+        whereArg = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, whereCondition, whereArg);
+
+        try {
+            printResults((sqlStatement.executeQuery(sqlQuery)));
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    /**
+     * Prints the columns at the table has.
+     */
+    static void printColumn(Statement sqlStatement) {
+        String sqlQuery, caller, selectArg, fromArg, whereCondition, whereArg;
+        try {
+            sqlQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'student';";
+            printResults(sqlStatement.executeQuery(sqlQuery));
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    } //End printColumns
+
+    static void printAll(Statement sqlStatement) {
+
+    }
+
+    static void printColumnNames(Statement sqlStatement) {
+
+    }
+} //End Info
