@@ -9,9 +9,6 @@ import java.sql.Statement;
  * Author: Joseph Pariseau
  *
  * This is a simple SQL server written in Java.
- *
- * By the end it will be able to add entries, delete entries, edit entries,
- * and look up entries with lots of parameters.
  */
 
 public class server {
