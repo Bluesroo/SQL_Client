@@ -6,8 +6,6 @@ import java.util.Scanner;
  * Author: Joseph Pariseau
  *
  * This is a helper class for the server.
- *
- * By the end it will handle user input and SQL injection protection.
  */
 
 public class Helper {

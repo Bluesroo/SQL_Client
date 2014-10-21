@@ -5,8 +5,6 @@ import java.sql.*;
  * Author: Joseph Pariseau
  *
  * This class is responsible for manipulating the db based on user input.
- *
- * By the end it will be able to add, delete, and edit entries.
  */
 
 public class Manipulate {
