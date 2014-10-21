@@ -1,4 +1,4 @@
-package testing;
+package main.java ;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,10 +8,11 @@ import java.sql.Statement;
 /**
  * Author: Joseph Pariseau
  *
+ * This is a simple SQL Server written in Java.
  * This is a simple SQL server written in Java.
  */
 
-public class server {
+public class Server {
     //Database connection variables
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";

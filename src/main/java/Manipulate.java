@@ -1,4 +1,5 @@
-package testing;
+package main.java;
+
 import java.sql.*;
 
 /**
