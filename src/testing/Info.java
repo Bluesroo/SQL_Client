@@ -19,13 +19,25 @@ public class Info {
      */
     static void printResults(ResultSet results) {
         try {
+            if (!results.isBeforeFirst()) {
+                System.out.println("There is no data to print.");
+                return;
+            }
             ResultSetMetaData resultsMetaData = results.getMetaData();
             int columnsNumber = resultsMetaData.getColumnCount();
             while (results.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     String columnValue = results.getString(i);
-                    System.out.println(columnValue);
+                    String columnName = resultsMetaData.getColumnName(i);
+                    if (columnName.equals("id")) {
+                        columnName = columnName.concat(":\t\t");
+                    }
+                    else {
+                        columnName = columnName.concat(":\t");
+                    }
+                    System.out.println(columnName + columnValue);
                 }
+                System.out.println("\n");
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -41,6 +53,7 @@ public class Info {
         String selectArg = "*";
         fromArg = "student";
 
+        Info.printColumnNames(sqlStatement);
         System.out.println("Please enter a column name: ");
         whereCondition = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
         System.out.println("Please enter a value from the column: ");
@@ -62,6 +75,7 @@ public class Info {
         String caller = "column";
         String fromArg = "student";
 
+        Info.printColumnNames(sqlStatement);
         System.out.println("Please enter a column name: ");
         selectArg = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
         sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, null, null);
