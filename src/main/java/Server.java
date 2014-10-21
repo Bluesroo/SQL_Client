@@ -9,7 +9,6 @@ import java.sql.Statement;
  * Author: Joseph Pariseau
  *
  * This is a simple SQL Server written in Java.
- * This is a simple SQL server written in Java.
  */
 
 public class Server {
