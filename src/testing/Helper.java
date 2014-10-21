@@ -138,8 +138,8 @@ public class Helper {
                                    String whereArg) {
         String query = "SELECT " + selectArg + "\nFROM " + fromArg;
 
-        if (caller.equals("row") || caller.equals("columnName")) {
-            query = query.concat("\nWHERE " + whereCondition + " = " + whereArg);
+        if (caller.equals("row") || caller.equals("columnNames")) {
+            query = query.concat("\nWHERE " + whereCondition + " = '" + whereArg + "';");
         }
 
         return query;

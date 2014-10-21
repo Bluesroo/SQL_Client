@@ -20,18 +20,12 @@ public class server {
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";
     static final String USER = User.USER;
     static final String PASS = User.PASS;
+    static final int MAIN_CHOICE_AMOUNT = 8;
 
     /**
      * Main entry point for the server.
      */
     public static void main(String[] args) {
-
-        System.out.println(Helper.infoQueryBuilder("row", "*", "student", "name", "Joe"));
-        System.out.println(Helper.infoQueryBuilder("column", "major", "student", "name", "Joe"));
-        System.out.println(Helper.infoQueryBuilder("all", "*", "student", null, null));
-        System.out.println(Helper.infoQueryBuilder("columnName", "COLUMN_NAME", "INFORMATION_SCHEMA.COLUMNS",
-                "table_name", "student"));
-
         Connection conn = null;
         Statement sqlStatement = null;
         Integer choice = 0;
@@ -44,10 +38,10 @@ public class server {
             Class.forName(JDBC_DRIVER);
 
             //Gets the user's choice and directs them to the proper function
-            while (choice != 5) {
+            while (choice != MAIN_CHOICE_AMOUNT) {
                 Helper.printChoices(caller);
                 System.out.println("What would you like to do? ");
-                choice = Helper.getChoice(8);
+                choice = Helper.getChoice(MAIN_CHOICE_AMOUNT);
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
@@ -63,21 +57,18 @@ public class server {
                         Info.printColumnNames(sqlStatement);
                         break;
                     case 5:
-                        Info.printColumn(sqlStatement);
-                        break;
-                    case 6:
                         Manipulate.addEntry(sqlStatement);
                         System.out.println("Data added.\n");
                         break;
-                    case 7:
+                    case 6:
                         Manipulate.deleteEntry(sqlStatement);
                         System.out.println("Data deleted.\n");
                         break;
-                    case 8:
+                    case 7:
                         Manipulate.editEntry(sqlStatement);
                         System.out.println("Data edited.\n");
                         break;
-                    case 9:
+                    case MAIN_CHOICE_AMOUNT:
                         System.out.println("Goodbye!");
                         break;
                     default:
