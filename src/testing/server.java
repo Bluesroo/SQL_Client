@@ -18,47 +18,57 @@ public class server {
     //Database connection variables
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";
-    static final String USER = "USER";
-    static final String PASS = "PASS";
+    static final String USER = User.USER;
+    static final String PASS = User.PASS;
+    static final int MAIN_CHOICE_AMOUNT = 8;
 
     /**
      * Main entry point for the server.
      */
     public static void main(String[] args) {
         Connection conn = null;
-        Statement sqlStatment = null;
+        Statement sqlStatement = null;
         Integer choice = 0;
         String caller = "main";
 
         try {
             //Connects to the database and prepares to issue a statement
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            sqlStatment = conn.createStatement();
+            sqlStatement = conn.createStatement();
             Class.forName(JDBC_DRIVER);
 
             //Gets the user's choice and directs them to the proper function
-            while (choice != 5) {
-                JDBCHelper.printChoices(caller);
+            while (choice != MAIN_CHOICE_AMOUNT) {
+                Helper.printChoices(caller);
                 System.out.println("What would you like to do? ");
-                choice = JDBCHelper.getChoice(5);
+                choice = Helper.getChoice(MAIN_CHOICE_AMOUNT);
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
-                        JDBCInfo.printColumns(sqlStatment);
+                        Info.printRow(sqlStatement);
                         break;
                     case 2:
-                        JDBCManipulate.addEntry(sqlStatment);
-                        System.out.println("Data added.\n");
+                        Info.printColumn(sqlStatement);
                         break;
                     case 3:
-                        JDBCManipulate.deleteEntry(sqlStatment);
-                        System.out.println("Data deleted.\n");
+                        Info.printAll(sqlStatement);
                         break;
                     case 4:
-                        JDBCManipulate.editEntry(sqlStatment);
-                        System.out.println("Data edited.\n");
+                        Info.printColumnNames(sqlStatement);
                         break;
                     case 5:
+                        Manipulate.addEntry(sqlStatement);
+                        System.out.println("Data added.\n");
+                        break;
+                    case 6:
+                        Manipulate.deleteEntry(sqlStatement);
+                        System.out.println("Data deleted.\n");
+                        break;
+                    case 7:
+                        Manipulate.editEntry(sqlStatement);
+                        System.out.println("Data edited.\n");
+                        break;
+                    case MAIN_CHOICE_AMOUNT:
                         System.out.println("Goodbye!");
                         break;
                     default:
@@ -75,8 +85,8 @@ public class server {
         } finally {
             //Finally block used to close resources
             try {
-                if (sqlStatment != null) {
-                    sqlStatment.close();
+                if (sqlStatement != null) {
+                    sqlStatement.close();
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
@@ -89,5 +99,5 @@ public class server {
                 se.printStackTrace();
             } //End finally try
         } //End try
-    }//End main
-}//End server
+    } //End main
+} //End server

@@ -7,12 +7,9 @@ import java.sql.*;
  * This class is responsible for manipulating the db based on user input.
  *
  * By the end it will be able to add, delete, and edit entries.
- *
- * (It might also be able to edit the table itself, but that's to be decided
- * later).
  */
 
-public class JDBCManipulate {
+public class Manipulate {
 
     /**
      * Simply adds an entry to the db.
@@ -21,23 +18,23 @@ public class JDBCManipulate {
         String name, GPA, major, grad;
 
         System.out.println("Enter a first name: ");
-        name = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        name = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
         System.out.println("Enter a GPA: ");
-        GPA = JDBCHelper.getFloatStr("Please enter a number between 0.0 and 4.0 characters: ", 0.0f, 4.0f);
+        GPA = Helper.getFloatStr("Please enter a number between 0.0 and 4.0 characters: ", 0.0f, 4.0f);
         System.out.println("Enter a major: ");
-        major = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        major = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
         System.out.println("Enter a year of graduation: ");
-        grad = JDBCHelper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
+        grad = Helper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
 
         //Construct the sqlQuery and execute it
-        String sqlQuery = JDBCHelper.manipulateQueryBuilder("insert", "", "", new String[] {name, GPA, major, grad}, "", "");
+        String sqlQuery = Helper.manipulateQueryBuilder("insert", "", "", new String[]{name, GPA, major, grad}, "", "");
         try {
             sqlStatement.executeUpdate(sqlQuery);
         } catch (SQLException se) {
             System.out.println(grad);
             se.printStackTrace();
         }
-    }//End addEntry
+    } //End addEntry
 
     /**
      * Simply deletes an entry from the db
@@ -48,24 +45,24 @@ public class JDBCManipulate {
         int choice;
 
         //Constructs sqlQuery
-        JDBCHelper.printChoices(caller);
-        choice = JDBCHelper.getChoice(4);
+        Helper.printChoices(caller);
+        choice = Helper.getChoice(4);
         System.out.println("\n");
         switch (choice) {
             case 1:
                 System.out.println("Enter a first name: ");
-                String name = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
-                sqlQuery = JDBCHelper.manipulateQueryBuilder("delete", "name", name, null, "", "");
+                String name = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+                sqlQuery = Helper.manipulateQueryBuilder("delete", "name", name, null, "", "");
                 break;
             case 2:
                 System.out.println("Enter an id: ");
-                String id = JDBCHelper.getIntStr("Please enter a valid id: ", 1, 100);
-                sqlQuery = JDBCHelper.manipulateQueryBuilder("delete", "id", id, null, "", "");
+                String id = Helper.getIntStr("Please enter a valid id: ", 1, 100);
+                sqlQuery = Helper.manipulateQueryBuilder("delete", "id", id, null, "", "");
                 break;
             case 3:
                 System.out.println("Enter a year of graduation: ");
-                String grad = JDBCHelper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
-                sqlQuery = JDBCHelper.manipulateQueryBuilder("delete", "grad", grad, null, "", "");
+                String grad = Helper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
+                sqlQuery = Helper.manipulateQueryBuilder("delete", "grad", grad, null, "", "");
                 break;
             case 4:
                 return;
@@ -82,7 +79,7 @@ public class JDBCManipulate {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-    }//End deleteEntry
+    } //End deleteEntry
 
     /**
      * Edits a database entry
@@ -95,62 +92,62 @@ public class JDBCManipulate {
         int choice;
 
         //Constructs sqlQuery
-        JDBCHelper.printChoices(caller1);
-        choice = JDBCHelper.getChoice(4);
+        Helper.printChoices(caller1);
+        choice = Helper.getChoice(4);
         System.out.println("\n");
         switch (choice) {
             case 1:
                 whereCondition = "name";
                 System.out.println("Enter a first name: ");
-                whereArgument = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+                whereArgument = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
                 break;
             case 2:
                 whereCondition = "grad";
                 System.out.println("Enter a year of graduation: ");
-                whereArgument = JDBCHelper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
+                whereArgument = Helper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
                 break;
             case 3:
                 whereCondition = "id";
                 System.out.println("Enter an id: ");
-                whereArgument = JDBCHelper.getIntStr("Please enter a valid id: ", 1, 100);
+                whereArgument = Helper.getIntStr("Please enter a valid id: ", 1, 100);
                 break;
             case 4:
                 return;
             default:
                 System.out.println("Invalid input.");
                 return;
-        }//End switch
-        JDBCHelper.printChoices(caller2);
-        choice = JDBCHelper.getChoice(5);
+        } //End switch
+        Helper.printChoices(caller2);
+        choice = Helper.getChoice(5);
         System.out.println("\n");
         switch (choice) {
             case 1:
                 setCondition = "name";
                 System.out.println("Enter a first name: ");
-                setArgument = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+                setArgument = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
                 break;
             case 2:
                 setCondition = "GPA";
                 System.out.println("Enter a GPA: ");
-                setArgument = JDBCHelper.getFloatStr("Please enter a number between 0.0 and 4.0 characters: ", 0.0f, 4.0f);
+                setArgument = Helper.getFloatStr("Please enter a number between 0.0 and 4.0 characters: ", 0.0f, 4.0f);
                 break;
             case 3:
                 setCondition = "major";
                 System.out.println("Enter a major: ");
-                setArgument = JDBCHelper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+                setArgument = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
                 break;
             case 4:
                 setCondition = "grad";
                 System.out.println("Enter a year of graduation: ");
-                setArgument = JDBCHelper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
+                setArgument = Helper.getIntStr("Please enter a year between 1912 and 2020: ", 1900, 2018);
                 break;
             case 5:
                 return;
             default:
                 System.out.println("Invalid input.");
                 return;
-        }//End switch
-        sqlQuery = JDBCHelper.manipulateQueryBuilder("edit", whereCondition, whereArgument, null, setCondition, setArgument);
+        } //End switch
+        sqlQuery = Helper.manipulateQueryBuilder("edit", whereCondition, whereArgument, null, setCondition, setArgument);
 
         //Execute the sqlQuery
         try {
@@ -160,5 +157,5 @@ public class JDBCManipulate {
         } catch (SQLException se) {
             se.printStackTrace();
         }
-    }//End editEntry
-}//End JDBCManipulate
+    } //End editEntry
+} //End Manipulate
