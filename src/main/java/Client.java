@@ -8,10 +8,10 @@ import java.sql.Statement;
 /**
  * Author: Joseph Pariseau
  *
- * This is a simple SQL Server written in Java.
+ * This is a simple SQL Client written in Java.
  */
 
-public class Server {
+public class Client {
     //Database connection variables
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/STUDENTS";
@@ -36,33 +36,33 @@ public class Server {
 
             //Gets the user's choice and directs them to the proper function
             while (choice != MAIN_CHOICE_AMOUNT) {
-                Helper.printChoices(caller);
+                Helpers.printChoices(caller);
                 System.out.println("What would you like to do? ");
-                choice = Helper.getChoice(MAIN_CHOICE_AMOUNT);
+                choice = Helpers.getChoice(MAIN_CHOICE_AMOUNT);
                 System.out.println("\n");
                 switch (choice) {
                     case 1:
-                        Info.printRow(sqlStatement);
+                        DatabaseReader.printRow(sqlStatement);
                         break;
                     case 2:
-                        Info.printColumn(sqlStatement);
+                        DatabaseReader.printColumn(sqlStatement);
                         break;
                     case 3:
-                        Info.printAll(sqlStatement);
+                        DatabaseReader.printAll(sqlStatement);
                         break;
                     case 4:
-                        Info.printColumnNames(sqlStatement);
+                        DatabaseReader.printColumnNames(sqlStatement);
                         break;
                     case 5:
-                        Manipulate.addEntry(sqlStatement);
+                        DatabaseManipulator.addEntry(sqlStatement);
                         System.out.println("Data added.\n");
                         break;
                     case 6:
-                        Manipulate.deleteEntry(sqlStatement);
+                        DatabaseManipulator.deleteEntry(sqlStatement);
                         System.out.println("Data deleted.\n");
                         break;
                     case 7:
-                        Manipulate.editEntry(sqlStatement);
+                        DatabaseManipulator.editEntry(sqlStatement);
                         System.out.println("Data edited.\n");
                         break;
                     case MAIN_CHOICE_AMOUNT:

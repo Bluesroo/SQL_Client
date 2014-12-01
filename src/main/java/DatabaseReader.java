@@ -12,7 +12,7 @@ import java.sql.Statement;
  * displayed to the user.
  */
 
-public class Info {
+public class DatabaseReader {
 
     /**
      * A helper function that prints out the results returned from queries.
@@ -53,12 +53,12 @@ public class Info {
         String selectArg = "*";
         fromArg = "student";
 
-        Info.printColumnNames(sqlStatement);
+        DatabaseReader.printColumnNames(sqlStatement);
         System.out.println("Please enter a column name: ");
-        whereCondition = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        whereCondition = Helpers.getString("Please enter between 1 and 30 characters: ", 1, 30);
         System.out.println("Please enter a value from the column: ");
-        whereArg = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
-        sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, whereCondition, whereArg);
+        whereArg = Helpers.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        sqlQuery = QueryBuilder.infoQueryBuilder(caller, selectArg, fromArg, whereCondition, whereArg);
 
         try {
             printResults((sqlStatement.executeQuery(sqlQuery)));
@@ -75,10 +75,10 @@ public class Info {
         String caller = "column";
         String fromArg = "student";
 
-        Info.printColumnNames(sqlStatement);
+        DatabaseReader.printColumnNames(sqlStatement);
         System.out.println("Please enter a column name: ");
-        selectArg = Helper.getString("Please enter between 1 and 30 characters: ", 1, 30);
-        sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, null, null);
+        selectArg = Helpers.getString("Please enter between 1 and 30 characters: ", 1, 30);
+        sqlQuery = QueryBuilder.infoQueryBuilder(caller, selectArg, fromArg, null, null);
 
         try {
             printResults(sqlStatement.executeQuery(sqlQuery));
@@ -96,7 +96,7 @@ public class Info {
         String selectArg = "*";
         String fromArg = "student";
 
-        sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, null, null);
+        sqlQuery = QueryBuilder.infoQueryBuilder(caller, selectArg, fromArg, null, null);
 
         try {
             printResults(sqlStatement.executeQuery(sqlQuery));
@@ -116,7 +116,7 @@ public class Info {
         String whereCondition = "table_name";
         String whereArg = "student";
 
-        sqlQuery = Helper.infoQueryBuilder(caller, selectArg, fromArg, whereCondition, whereArg);
+        sqlQuery = QueryBuilder.infoQueryBuilder(caller, selectArg, fromArg, whereCondition, whereArg);
 
         try {
             printResults(sqlStatement.executeQuery(sqlQuery));
@@ -124,4 +124,4 @@ public class Info {
             se.printStackTrace();
         }
     }
-} //End Info
+} //End DatabaseReader
